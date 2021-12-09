@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    
+    <h1>Home</h1>
+
+    <form action="/show_result/home" method="POST">
+        {% csrf_token %}
+        <p>
+            地址:&nbsp;<input type="text" name="position" value = "{{self.inputPosition}}" style="width: 350px;">
+        </p>
+        <p>
+            距離(m):&nbsp;<input type="number" name="distance" value="{{self.inputDistance}}">
+        </p>
+        <p>
+            <input type="submit" value="查詢">
+        </p>
+    </form>
+
+    <h2>查詢結果</h2>
+    {% if avergePrice == 0 %}
+        <h3>無結果&nbsp;= =</h3>
+    {% else %}
+        <h3>均價&nbsp;NT${{avergePrice}}&nbsp;每平方公尺</h3>
+        <table border = "1">
+            <tr>
+                <th>&nbsp;id&nbsp;</th>
+                <th>&nbsp;地址&nbsp;</th>
+                <th>&nbsp;售價(平方公尺)&nbsp;</th>
+            </tr>
+            {% for house in self.houseWithin %}
+                <tr>
+                    <td>{{ house.id }}</td>
+                    <td>{{ house.position }}</td>
+                    <td>{{ house.unitPrice }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</body>
+</html>
