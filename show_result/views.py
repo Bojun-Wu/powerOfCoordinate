@@ -63,6 +63,8 @@ class home_page(View):
         if len(acceptPos) == 0:
             return render(request, 'show_result/home.html', locals())
         self.houseWithin = house.objects.filter(id__in=acceptPos)
+        for tempHouse in self.houseWithin:
+            tempHouse.TWprice = f'{tempHouse.unitPrice*3.30579:.2f}'
         for price in self.houseWithin:
             avergePrice += price.unitPrice
         avergePrice = round(avergePrice/len(acceptPos))

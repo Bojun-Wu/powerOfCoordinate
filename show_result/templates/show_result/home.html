@@ -77,7 +77,8 @@
                     <th scope="col">#</th>
                     <th scope="col">         </th>
                     <th scope="col">Address</th>
-                    <th scope="col">Price ( pre square meter )</th>
+                    <th scope="col">Price ( 坪 )</th>
+                    <th scope="col">Update Time</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -86,7 +87,8 @@
                             <th scope="row">{{ house.id }}</th>
                             <td>         </td>
                             <td>{{ house.position }}</td>
-                            <td>{{ house.unitPrice }}</td>
+                            <td>{{ house.TWprice }}</td>
+                            <td>{{ house.update_time }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
