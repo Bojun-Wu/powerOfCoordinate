@@ -8,7 +8,7 @@ def initDb():
         rows = csv.reader(csvfile)
         count = 0
         for row in rows:
-            if '鄉鎮市區' in row[0] or row[0] == 'The villages and towns urban district' or row[22] == '':
+            if '鄉鎮市區' in row[0] or row[0] == 'The villages and towns urban district' or row[22] == '' or row[26] != '' or row[1] == '土地' or row[1] == '車位':
                 continue
             map_client = googlemaps.Client(
                 'AIzaSyAcilcRP58jNHR7JwLyufW6A2zxCL65ePg')
