@@ -70,4 +70,4 @@ class home_page(View):
             round(avergePrice/len(acceptPos)*3.30579, 2))
         googleMapEnbed = "https://www.google.com/maps/embed/v1/place?key=AIzaSyDowkWVDSteeMLzGZfRoPgrCiXGnx2_lkk&q="+str(
             data[0]['geometry']['location']['lat'])+","+str(data[0]['geometry']['location']['lng'])
-        return render(request, 'show_result/home.html', locals())
+        return render(request, 'show_result/showResult.html', locals())

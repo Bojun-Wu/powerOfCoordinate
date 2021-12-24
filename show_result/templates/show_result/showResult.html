@@ -67,6 +67,45 @@
             </form>
         </div>
     </div>
+    <div class="col-xs-12" style="height:50px;"></div>
+        <div class="container">
+          {% if avergePrice == 0 %}
+          <h3>No matching result found</h3>
+          {% else %}
+          <iframe
+          width="1295"
+          height="500"
+          style="border:0"
+          loading="lazy"
+          allowfullscreen
+          src={{googleMapEnbed}}>
+          </iframe>
+          <h3>Average price: &nbsp;NT${{avergePrice}}&nbsp;( 坪 )</h3>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">         </th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Price ( 坪 )</th>
+                    <th scope="col">Update Time</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for house in self.houseWithin %}
+                        <tr>
+                            <th scope="row">{{ house.id }}</th>
+                            <td>         </td>
+                            <td>{{ house.position }}</td>
+                            <td>{{ house.TWprice }}</td>
+                            <td>{{ house.update_time }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>
