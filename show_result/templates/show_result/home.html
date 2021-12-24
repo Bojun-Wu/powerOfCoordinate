@@ -72,6 +72,14 @@
           {% if avergePrice == 0 %}
           <h3>No matching result found</h3>
           {% else %}
+          <iframe
+          width="1295"
+          height="500"
+          style="border:0"
+          loading="lazy"
+          allowfullscreen
+          src={{googleMapEnbed}}>
+        </iframe>
           <h3>Average price: &nbsp;NT${{avergePrice}}&nbsp;( 坪 )</h3>
             <table class="table table-striped">
                 <thead>

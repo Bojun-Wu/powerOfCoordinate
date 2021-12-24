@@ -65,8 +65,9 @@ class home_page(View):
         self.houseWithin = house.objects.filter(id__in=acceptPos)
         for tempHouse in self.houseWithin:
             tempHouse.TWprice = "${:,.2f}".format(tempHouse.unitPrice*3.30579)
-        for price in self.houseWithin:
-            avergePrice += price.unitPrice
+            avergePrice += tempHouse.unitPrice
         avergePrice = "{:,.2f}".format(
             round(avergePrice/len(acceptPos)*3.30579, 2))
+        googleMapEnbed = "https://www.google.com/maps/embed/v1/place?key=AIzaSyDowkWVDSteeMLzGZfRoPgrCiXGnx2_lkk&q="+str(
+            data[0]['geometry']['location']['lat'])+","+str(data[0]['geometry']['location']['lng'])
         return render(request, 'show_result/home.html', locals())
