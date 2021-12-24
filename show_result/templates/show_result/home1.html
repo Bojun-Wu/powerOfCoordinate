@@ -27,7 +27,7 @@
     {% if avergePrice == 0 %}
         <h3>無結果&nbsp;= =</h3>
     {% else %}
-        <h3>均價&nbsp;NT${{avergePrice}}&nbsp;每平方公尺</h3>
+        <h4>均價&nbsp;NT${{avergePrice}}&nbsp;每平方公尺</h4>
         <table border = "1">
             <tr>
                 <th>&nbsp;id&nbsp;</th>
@@ -38,7 +38,7 @@
                 <tr>
                     <td>{{ house.id }}</td>
                     <td>{{ house.position }}</td>
-                    <td>{{ house.unitPrice }}</td>
+                    <td>{% "{:,.2f}".format(house.unitPrice) %}</td>
                 </tr>
             {% endfor %}
         </table>

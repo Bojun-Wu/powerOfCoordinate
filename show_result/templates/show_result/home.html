@@ -68,9 +68,11 @@
         </div>
     </div>
     <div class="col-xs-12" style="height:50px;"></div>
-    {% if avergePrice == 0 %}
-    {% else %}
         <div class="container">
+          {% if avergePrice == 0 %}
+          <h3>No matching result found</h3>
+          {% else %}
+          <h3>Average price: &nbsp;NT${{avergePrice}}&nbsp;( 坪 )</h3>
             <table class="table table-striped">
                 <thead>
                 <tr>
