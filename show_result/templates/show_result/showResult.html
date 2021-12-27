@@ -99,7 +99,15 @@
                             <td>{{ house.TWprice }}</td>
                             <td>{{house.age}}</td>
                             <td>{{house.building_state}}</td>
-                            <td>{{house.transaction_sign}}</td>
+                            <td>
+                              <span class="bg-primary text-white p-1">建</span>
+                              {% if '土' in house.transaction_sign %}
+                              <span class="bg-success text-white p-1">土</span>
+                              {% endif %}
+                              {% if '車' in house.transaction_sign %}
+                              <span class="bg-warning text-white p-1">車</span>
+                              {% endif %}
+                            </td>
                             <td>{{ house.last_update }} Days Ago</td>
                         </tr>
                     {% endfor %}

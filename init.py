@@ -22,9 +22,9 @@ def initDb():
             else:
                 houseAge = None
             if('車位' in row[1]):
-                sellType = '土建車'
+                sellType = '建土車'
             elif('土地' in row[1]):
-                sellType = '土建'
+                sellType = '建土'
             else:
                 sellType = '建'
             house.objects.create(position=row[2], unitPrice=row[22], lat=data[0]['geometry']
