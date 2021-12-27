@@ -83,9 +83,11 @@
                 <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">         </th>
                     <th scope="col">Address</th>
                     <th scope="col">Price ( 坪 )</th>
+                    <th scope="col">age of building</th>
+                    <th scope="col">building_state</th>
+                    <th scope="col">transaction_sign</th>
                     <th scope="col">Update Time</th>
                 </tr>
                 </thead>
@@ -93,9 +95,11 @@
                     {% for house in self.houseWithin %}
                         <tr>
                             <th scope="row">{{ house.id }}</th>
-                            <td>         </td>
                             <td>{{ house.position }}</td>
                             <td>{{ house.TWprice }}</td>
+                            <td>{{house.age}}</td>
+                            <td>{{house.building_state}}</td>
+                            <td>{{house.transaction_sign}}</td>
                             <td>{{ house.last_update }} Days Ago</td>
                         </tr>
                     {% endfor %}

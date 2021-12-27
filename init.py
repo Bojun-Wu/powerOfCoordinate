@@ -4,6 +4,7 @@ def initDb():
     house.objects.all().delete()
     import csv
     import googlemaps
+    from datetime import datetime
     with open(r'D:\download\lvr_landcsv\a_lvr_land_a.csv', newline='', encoding="utf-8") as csvfile:
         rows = csv.reader(csvfile)
         count = 0
@@ -15,8 +16,19 @@ def initDb():
             data = map_client.geocode(row[2])
             if (data == []):
                 continue
+            if(row[14] != ''):
+                if(int(row[14][:-4]) < 200 and int(row[14][:-4]) > 0):
+                    houseAge = datetime.now().year-(int(row[14][:-4])+1911)
+            else:
+                houseAge = None
+            if('車位' in row[1]):
+                sellType = '土建車'
+            elif('土地' in row[1]):
+                sellType = '土建'
+            else:
+                sellType = '建'
             house.objects.create(position=row[2], unitPrice=row[22], lat=data[0]['geometry']
-                                 ['location']['lat'], lon=data[0]['geometry']['location']['lng'])
+                                 ['location']['lat'], lon=data[0]['geometry']['location']['lng'], age=houseAge, building_state=row[11][:2], transaction_sign=sellType)
             count += 1
-            if count > 5000:
+            if count > 2000:
                 break
