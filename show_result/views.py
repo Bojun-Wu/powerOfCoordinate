@@ -6,6 +6,7 @@ from .models import house
 import googlemaps
 from geopy import distance
 from django.views import View
+from datetime import datetime, timezone
 
 # Create your views here.
 
@@ -66,6 +67,10 @@ class home_page(View):
         for tempHouse in self.houseWithin:
             tempHouse.TWprice = "${:,.2f}".format(tempHouse.unitPrice*3.30579)
             avergePrice += tempHouse.unitPrice
+            # tempHouse.last_update_time_format = (tempHouse.update_time.strftime(
+            #     "%m/%d/%Y")
+            tempHouse.last_update = (
+                datetime.now(timezone.utc)-tempHouse.update_time).days
         avergePrice = "{:,.2f}".format(
             round(avergePrice/len(acceptPos)*3.30579, 2))
         googleMapEnbed = "https://www.google.com/maps/embed/v1/place?key=AIzaSyDowkWVDSteeMLzGZfRoPgrCiXGnx2_lkk&q="+str(

@@ -18,5 +18,5 @@ def initDb():
             house.objects.create(position=row[2], unitPrice=row[22], lat=data[0]['geometry']
                                  ['location']['lat'], lon=data[0]['geometry']['location']['lng'])
             count += 1
-            if count > 1000:
+            if count > 5000:
                 break
