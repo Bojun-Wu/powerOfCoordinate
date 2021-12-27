@@ -43,7 +43,7 @@ class home_page(View):
 
     houseWithin = house.objects.all()
     inputPosition = ''
-    inputDistance = 0
+    inputDistance = 1000
 
     def get(self, request):
         # for house in self.houseWithin():
@@ -53,6 +53,8 @@ class home_page(View):
     def post(self, request):
         self.inputPosition = request.POST['position']
         self.inputDistance = request.POST['distance']
+        if self.inputPosition == '':
+            return render(request, 'show_result/home.html')
         map_client = googlemaps.Client(
             'AIzaSyAcilcRP58jNHR7JwLyufW6A2zxCL65ePg')
         data = map_client.geocode(self.inputPosition)
@@ -64,13 +66,16 @@ class home_page(View):
         if len(acceptPos) == 0:
             return render(request, 'show_result/home.html', locals())
         self.houseWithin = house.objects.filter(id__in=acceptPos)
+        displayLocation = [[self.inputPosition, data[0]['geometry']
+                            ['location']['lat'], data[0]['geometry']['location']['lng']]]
         for tempHouse in self.houseWithin:
             tempHouse.TWprice = "${:,.2f}".format(tempHouse.unitPrice*3.30579)
             avergePrice += tempHouse.unitPrice
-            # tempHouse.last_update_time_format = (tempHouse.update_time.strftime(
-            #     "%m/%d/%Y")
             tempHouse.last_update = (
                 datetime.now(timezone.utc)-tempHouse.update_time).days
+            displayLocation.append(
+                [tempHouse.position, tempHouse.lat, tempHouse.lon])
+        displayLocationPass = str(displayLocation)
         avergePrice = "{:,.2f}".format(
             round(avergePrice/len(acceptPos)*3.30579, 2))
         googleMapEnbed = "https://www.google.com/maps/embed/v1/place?key=AIzaSyDowkWVDSteeMLzGZfRoPgrCiXGnx2_lkk&q="+str(
