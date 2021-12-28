@@ -68,16 +68,20 @@ class home_page(View):
         self.houseWithin = house.objects.filter(id__in=acceptPos)
         displayLocation = [[self.inputPosition, data[0]['geometry']
                             ['location']['lat'], data[0]['geometry']['location']['lng']]]
+        loopcount = 0
         for tempHouse in self.houseWithin:
+            loopcount += 1
             tempHouse.TWprice = "${:,.2f}".format(tempHouse.unitPrice*3.30579)
             avergePrice += tempHouse.unitPrice
             tempHouse.last_update = (
                 datetime.now(timezone.utc)-tempHouse.update_time).days
             displayLocation.append(
-                [tempHouse.position, tempHouse.lat, tempHouse.lon])
+                [str(loopcount)+". "+tempHouse.position, tempHouse.lat, tempHouse.lon])
+            tempHouse.id = loopcount
+
         displayLocationPass = str(displayLocation)
         avergePrice = "{:,.2f}".format(
             round(avergePrice/len(acceptPos)*3.30579, 2))
-        googleMapEnbed = "https://www.google.com/maps/embed/v1/place?key=AIzaSyDowkWVDSteeMLzGZfRoPgrCiXGnx2_lkk&q="+str(
-            data[0]['geometry']['location']['lat'])+","+str(data[0]['geometry']['location']['lng'])
+        # googleMapEnbed = "https://www.google.com/maps/embed/v1/place?key=AIzaSyDowkWVDSteeMLzGZfRoPgrCiXGnx2_lkk&q="+str(
+        #     data[0]['geometry']['location']['lat'])+","+str(data[0]['geometry']['location']['lng'])
         return render(request, 'show_result/showResult.html', locals())

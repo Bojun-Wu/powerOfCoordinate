@@ -78,16 +78,32 @@
 
           {% include 'map.html' %}
 
-          <h3>Average price: &nbsp;NT${{avergePrice}}&nbsp;( 坪 )</h3>
+          <!-- <h3>Average price: &nbsp;NT${{avergePrice}}&nbsp;( 坪 )<small class="text-muted">  {{loopcount}} results</small></h3> -->
+          <div class="card">
+            <div class="card-body">
+              <div class="row g-2">
+                  
+                      <div class="col-sm-10">
+                        <h5>Average price: &nbsp;NT${{avergePrice}}&nbsp;( 坪 )</h5>
+                      </div>
+                      <div class="col align-self-end">
+                        <h6 class="text-muted">  {{loopcount}} results found</h6>
+                      </div>
+
+                  
+              </div>
+            
+          </div>
+          </div>
             <table class="table table-striped">
                 <thead>
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Address</th>
                     <th scope="col">Price ( 坪 )</th>
-                    <th scope="col">age of building</th>
-                    <th scope="col">building_state</th>
-                    <th scope="col">transaction_sign</th>
+                    <th scope="col">Age of Building</th>
+                    <th scope="col">Building State</th>
+                    <th scope="col">Transaction Sign</th>
                     <th scope="col">Update Time</th>
                 </tr>
                 </thead>
