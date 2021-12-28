@@ -7,6 +7,9 @@ import googlemaps
 from geopy import distance
 from django.views import View
 from datetime import datetime, timezone
+import requests
+import urllib.request
+import json
 
 # Create your views here.
 
@@ -46,28 +49,33 @@ class home_page(View):
     inputDistance = 1000
 
     def get(self, request):
-        # for house in self.houseWithin():
-        #     print(house.id)
         return render(request, 'show_result/home.html')
 
     def post(self, request):
         self.inputPosition = request.POST['position']
         self.inputDistance = request.POST['distance']
-        if self.inputPosition == '':
-            return render(request, 'show_result/home.html')
-        map_client = googlemaps.Client(
-            'AIzaSyAcilcRP58jNHR7JwLyufW6A2zxCL65ePg')
-        data = map_client.geocode(self.inputPosition)
-        if data == []:
-            return HttpResponse('something went wrong')
+        if(self.inputDistance == ''):
+            self.inputDistance = 1000
+        if(self.inputPosition == 'Current Position'):
+            response = requests.post(
+                "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyDowkWVDSteeMLzGZfRoPgrCiXGnx2_lkk")
+            lat = json.loads(response.content)['location']['lat']
+            lng = json.loads(response.content)['location']['lng']
+        else:
+            map_client = googlemaps.Client(
+                'AIzaSyAcilcRP58jNHR7JwLyufW6A2zxCL65ePg')
+            data = map_client.geocode(self.inputPosition)
+            if data == []:
+                return HttpResponse('something went wrong')
+            lat = data[0]['geometry']['location']['lat']
+            lng = data[0]['geometry']['location']['lng']
         acceptPos = [tempHouse.id for tempHouse in house.objects.all() if calDistance(
-            data[0]['geometry']['location']['lat'], data[0]['geometry']['location']['lng'], tempHouse.lat, tempHouse.lon, self.inputDistance)]
+            lat, lng, tempHouse.lat, tempHouse.lon, self.inputDistance)]
         avergePrice = 0
         if len(acceptPos) == 0:
-            return render(request, 'show_result/home.html', locals())
+            return render(request, 'show_result/showResult.html', locals())
         self.houseWithin = house.objects.filter(id__in=acceptPos)
-        displayLocation = [[self.inputPosition, data[0]['geometry']
-                            ['location']['lat'], data[0]['geometry']['location']['lng']]]
+        displayLocation = [[self.inputPosition, lat, lng]]
         loopcount = 0
         for tempHouse in self.houseWithin:
             loopcount += 1
@@ -78,10 +86,7 @@ class home_page(View):
             displayLocation.append(
                 [str(loopcount)+". "+tempHouse.position, tempHouse.lat, tempHouse.lon])
             tempHouse.id = loopcount
-
         displayLocationPass = str(displayLocation)
         avergePrice = "{:,.2f}".format(
             round(avergePrice/len(acceptPos)*3.30579, 2))
-        # googleMapEnbed = "https://www.google.com/maps/embed/v1/place?key=AIzaSyDowkWVDSteeMLzGZfRoPgrCiXGnx2_lkk&q="+str(
-        #     data[0]['geometry']['location']['lat'])+","+str(data[0]['geometry']['location']['lng'])
         return render(request, 'show_result/showResult.html', locals())
