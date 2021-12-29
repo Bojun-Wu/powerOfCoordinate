@@ -30,5 +30,5 @@ def initDb():
             house.objects.create(position=row[2], unitPrice=row[22], lat=data[0]['geometry']
                                  ['location']['lat'], lon=data[0]['geometry']['location']['lng'], age=houseAge, building_state=row[11][:2], transaction_sign=sellType)
             count += 1
-            if count > 2000:
+            if count > 50:
                 break
