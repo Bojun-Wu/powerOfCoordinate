@@ -1,0 +1,7 @@
+Django==2.2.12
+geopy==2.2.0
+googlemaps==4.5.3
+Requests==2.26.0
+requests2==2.16.0
+gunicorn==19.9.0
+django-heroku==0.3.1

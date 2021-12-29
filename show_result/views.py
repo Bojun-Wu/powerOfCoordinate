@@ -23,25 +23,6 @@ def calDistance(pointAlat, pointAlon, pointBlat, pointBlon, inputDistance):
         return True
 
 
-# def home(request):
-
-#     if request.method == 'GET':
-#         for i in houseWithin:
-#             print(i.id)
-#         return render(request, 'show_result/home.html', locals())
-
-#     elif request.method == "POST":
-#         inputPosition = request.POST['position']
-#         inputDistance = request.POST['distance']
-#         with urllib.request.urlopen("https://maps.googleapis.com/maps/api/geocode/json?address="+urllib.parse.quote(inputPosition)+"&key=AIzaSyAcilcRP58jNHR7JwLyufW6A2zxCL65ePg") as url:
-#             data = json.loads(url.read().decode())
-#             acceptPos = [house.id for house in house.objects.all() if calDistance(data['results'][0]['geometry']["location"]
-#                                                                                   ['lat'], data['results'][0]['geometry']["location"]['lng'], house.lat, house.lon, inputDistance)]
-#             print(acceptPos)
-#             houseWithin = house.objects.filter(id__in=acceptPos)
-#         return HttpResponseRedirect('/show_result/home')
-
-
 class home_page(View):
 
     houseWithin = house.objects.all()
