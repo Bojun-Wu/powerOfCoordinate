@@ -49,7 +49,7 @@ class home_page(View):
                 'AIzaSyAcilcRP58jNHR7JwLyufW6A2zxCL65ePg')
             data = map_client.geocode(self.inputPosition)
             if data == []:
-                return HttpResponse('something went wrong')
+                return render(request, 'show_result/home.html')
             lat = data[0]['geometry']['location']['lat']
             lng = data[0]['geometry']['location']['lng']
             displayLocation = [[self.inputPosition, lat, lng]]
