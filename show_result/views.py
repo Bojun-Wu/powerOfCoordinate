@@ -37,12 +37,14 @@ class home_page(View):
         self.inputDistance = request.POST['distance']
         if(self.inputDistance == ''):
             self.inputDistance = 1000
-        if(self.inputPosition == 'Current Position'):
-            response = requests.post(
-                "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyDowkWVDSteeMLzGZfRoPgrCiXGnx2_lkk")
-            lat = json.loads(response.content)['location']['lat']
-            lng = json.loads(response.content)['location']['lng']
-        else:
+        try:
+            self.inputPosition = f.split(',')
+            self.inputPosition[0] = float(self.inputPosition[0])
+            self.inputPosition[1] = float(self.inputPosition[1])
+            lat = self.inputPosition[0]
+            lng = self.inputPosition[1]
+            displayLocation = [['current position', lat, lng]]
+        except:
             map_client = googlemaps.Client(
                 'AIzaSyAcilcRP58jNHR7JwLyufW6A2zxCL65ePg')
             data = map_client.geocode(self.inputPosition)
@@ -50,13 +52,13 @@ class home_page(View):
                 return HttpResponse('something went wrong')
             lat = data[0]['geometry']['location']['lat']
             lng = data[0]['geometry']['location']['lng']
+            displayLocation = [[self.inputPosition, lat, lng]]
         acceptPos = [tempHouse.id for tempHouse in house.objects.all() if calDistance(
             lat, lng, tempHouse.lat, tempHouse.lon, self.inputDistance)]
         avergePrice = 0
         if len(acceptPos) == 0:
             return render(request, 'show_result/showResult.html', locals())
         self.houseWithin = house.objects.filter(id__in=acceptPos)
-        displayLocation = [[self.inputPosition, lat, lng]]
         loopcount = 0
         for tempHouse in self.houseWithin:
             loopcount += 1
