@@ -14,7 +14,7 @@ def setting(request):
         return render(request, 'setting.html')
     elif request.method == 'POST':
         from show_result.models import house
-        # house.objects.all().delete()
+        house.objects.all().delete()
         import csv
         import googlemaps
         from datetime import datetime
