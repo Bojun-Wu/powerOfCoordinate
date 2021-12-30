@@ -8,9 +8,10 @@ import googlemaps
 from datetime import datetime
 
 
-# def setting(request):
-#     initDb()
-#     return HttpResponseRedirect('/show_result/home')
+def clearDB(request):
+    if request.method == 'GET':
+        house.objects.all().delete()
+    return HttpResponseRedirect('/')
 
 
 def setting(request):
