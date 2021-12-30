@@ -14,22 +14,24 @@ def setting(request):
         return render(request, 'setting.html')
     elif request.method == 'POST':
         from show_result.models import house
-        house.objects.all().delete()
+        # house.objects.all().delete()
         import csv
         import googlemaps
         from datetime import datetime
         request.upload_handlers.pop(0)
         file = request.FILES['file'].file.name
-        # print(file.temporary_file_path)
     with open(file, newline='', encoding="utf-8") as csvfile:
         rows = csv.reader(csvfile)
         count = 0
         for row in rows:
+            # count += 1
+            # if(count >= 9000):
+            #     break
             if '鄉鎮市區' in row[0] or row[0] == 'The villages and towns urban district' or row[22] == '' or row[26] != '' or row[1] == '土地' or row[1] == '車位':
                 continue
             map_client = googlemaps.Client(
                 'AIzaSyAcilcRP58jNHR7JwLyufW6A2zxCL65ePg')
-            data = map_client.geocode(row[2])
+            data = map_client.geocode(row[0]+row[2])
             if (data == []):
                 continue
             if(row[14] != ''):
