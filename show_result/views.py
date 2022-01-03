@@ -27,7 +27,7 @@ class home_page(View):
 
     houseWithin = house.objects.all()
     inputPosition = ''
-    inputDistance = 1000
+    inputDistance = ''
     googleApiKey = config('GOOGLE_MAP_API_KEY')
 
     def get(self, request):
