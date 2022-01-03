@@ -7,4 +7,4 @@ gunicorn==19.9.0
 django-heroku==0.3.1
 django-bootstrap3
 psycopg2>=2.8,<2.9
-decouple
+python-decouple
