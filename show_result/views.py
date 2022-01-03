@@ -1,7 +1,6 @@
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.http import HttpResponse
-from init import initDb
 from .models import house
 import googlemaps
 from geopy import distance
