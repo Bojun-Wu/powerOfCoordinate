@@ -27,11 +27,11 @@ class home_page(View):
 
     houseWithin = house.objects.all()
     inputPosition = ''
-    inputDistance = ''
+    inputDistance = 1000
     googleApiKey = config('GOOGLE_MAP_API_KEY')
 
     def get(self, request):
-        return render(request, 'show_result/home.html', locals())
+        return render(request, 'show_result/home.html')
 
     def post(self, request):
         self.inputPosition = request.POST['position']
@@ -39,7 +39,7 @@ class home_page(View):
         if(self.inputDistance == ''):
             self.inputDistance = 1000
         try:
-            self.inputPosition = f.split(',')
+            self.inputPosition = self.inputPosition.split(',')
             self.inputPosition[0] = float(self.inputPosition[0])
             self.inputPosition[1] = float(self.inputPosition[1])
             lat = self.inputPosition[0]
@@ -47,7 +47,10 @@ class home_page(View):
             displayLocation = [['current position', lat, lng]]
         except:
             map_client = googlemaps.Client(self.googleApiKey)
-            data = map_client.geocode(self.inputPosition)
+            try:
+                data = map_client.geocode(self.inputPosition)
+            except:
+                data = []
             if data == []:
                 return render(request, 'show_result/home.html')
             lat = data[0]['geometry']['location']['lat']
