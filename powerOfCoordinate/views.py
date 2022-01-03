@@ -6,6 +6,7 @@ from show_result.models import house
 import csv
 import googlemaps
 from datetime import datetime
+from decouple import config
 
 
 def clearDB(request):
@@ -15,6 +16,7 @@ def clearDB(request):
 
 
 def setting(request):
+    googleApiKey = config('GOOGLE_MAP_API_KEY')
     if request.method == 'GET':
         return render(request, 'setting.html')
     elif request.method == 'POST':
@@ -33,8 +35,7 @@ def setting(request):
 
                 if '鄉鎮市區' in row[0] or row[0] == 'The villages and towns urban district' or row[22] == '' or row[26] != '' or row[1] == '土地' or row[1] == '車位':
                     continue
-                map_client = googlemaps.Client(
-                    'AIzaSyAcilcRP58jNHR7JwLyufW6A2zxCL65ePg')
+                map_client = googlemaps.Client(googleApiKey)
                 data = map_client.geocode(row[0]+row[2])
                 if (data == []):
                     continue

@@ -10,6 +10,7 @@ from datetime import datetime, timezone
 import requests
 import urllib.request
 import json
+from decouple import config
 
 # Create your views here.
 
@@ -28,9 +29,10 @@ class home_page(View):
     houseWithin = house.objects.all()
     inputPosition = ''
     inputDistance = 1000
+    googleApiKey = config('GOOGLE_MAP_API_KEY')
 
     def get(self, request):
-        return render(request, 'show_result/home.html')
+        return render(request, 'show_result/home.html', locals())
 
     def post(self, request):
         self.inputPosition = request.POST['position']
@@ -45,8 +47,7 @@ class home_page(View):
             lng = self.inputPosition[1]
             displayLocation = [['current position', lat, lng]]
         except:
-            map_client = googlemaps.Client(
-                'AIzaSyAcilcRP58jNHR7JwLyufW6A2zxCL65ePg')
+            map_client = googlemaps.Client(self.googleApiKey)
             data = map_client.geocode(self.inputPosition)
             if data == []:
                 return render(request, 'show_result/home.html')
