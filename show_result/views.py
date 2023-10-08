@@ -22,11 +22,13 @@ class home_page(View):
     googleApiKey = config('GOOGLE_MAP_API_KEY')
 
     def get(self, request):
+        print("got a client")
         return render(request, 'show_result/home.html')
 
     def post(self, request):
         self.inputPosition = request.POST['position']
         self.inputDistance = request.POST['distance'] if request.POST['distance'] else 1000
+        print("got a POST", self.inputPosition, self.inputDistance)
 
         try:
             self.cleanPosition = self.inputPosition.split(',')
