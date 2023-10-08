@@ -1,1 +1,1 @@
-web: gunicorn powerOfCoordinate.wsgi
+web: python manage.py migrate && gunicorn powerOfCoordinate.wsgi --log-file -

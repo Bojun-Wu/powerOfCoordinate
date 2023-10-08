@@ -76,7 +76,7 @@
             <tr>
               <th scope="col">#</th>
               <th scope="col">Address</th>
-              <th scope="col">Price ( 坪 )</th>
+              <th scope="col text-end pe-5">Price ( 坪 )</th>
               <th scope="col">Age of Building</th>
               <th scope="col">Building State</th>
               <th scope="col">Transaction Sign</th>
@@ -88,7 +88,7 @@
             <tr>
               <th scope="row">{{ house.id }}</th>
               <td>{{ house.position }}</td>
-              <td>{{ house.TWprice }}</td>
+              <td class="text-end pe-5">{{ house.TWprice }}</td>
               <td>{{house.age}}</td>
               <td>{{house.building_state}}</td>
               <td>
