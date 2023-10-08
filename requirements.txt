@@ -5,3 +5,4 @@ python-decouple==3.8
 Requests==2.31.0
 requests2==2.16.0
 gunicorn==19.9.0
+whitenoise==6.2.0
