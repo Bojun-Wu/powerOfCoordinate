@@ -19,7 +19,7 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('setting', views.setting),
-    path('clearDB', views.clearDB),
     path('', include('show_result.urls'))
+    # path('setting', views.setting),
+    # path('clearDB', views.clearDB),
 ]

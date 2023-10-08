@@ -1,8 +1,10 @@
-{% extends 'base.html'%}
+{% extends './base/base.html'%}
+
 {% block title %}
 <title>Result</title>
 {% endblock %}
-{% block content %}
+
+{% block searchResult %}
 <div class="col-xs-12" style="height:2em;"></div>
 <div class="container">
   {% if avergePrice == 0 %}
